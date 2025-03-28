@@ -1,0 +1,20 @@
+//temporary//
+for (int i = 1; i <= N_SERV1; i ++) {
+        pid_t pid_worker_s1 = fork();
+        ASSERT(pid_worker_s1 == -1, "fork failed: %s\n", strerror(errno));  
+        if (pid_worker_s1 == 0){
+            fprintf(stderr,"Router: Forked worker s1, instance %d\n", i);
+            execlp("./worker_s1", dealer2worker1_name, worker2dealer_name, NULL);
+            ASSERT(true, "execlp failed: %s\n", strerror(errno));
+        }
+    }
+
+for (int i = 1; i <= N_SERV2; i ++) {
+        pid_t pid_worker_s2 = fork();
+        ASSERT(pid_worker_s2 == -1, "fork failed: %s\n", strerror(errno));  
+        if (pid_worker_s2 == 0){
+            fprintf(stderr,"Router: Forked worker s2, instance %d\n", i);
+            execlp("./worker_s2", dealer2worker2_name, worker2dealer_name, NULL);
+            ASSERT(true, "execlp failed: %s\n", strerror(errno));
+        }
+    }
